@@ -8,39 +8,79 @@ public class PlayerController : MonoBehaviour
     [SerializeField] [Range(0, 10)] float Speed;
 
 
-    PlayerAction actions;
     Rigidbody2D rb;
-    Vector2 movement;
+    Vector2 movement, mouse,RollD;
+    float angle,timerRoll,TimerRollC;
+    bool isRolling;
+    int rollCount;
+
     // Start is called before the first frame update
-    private void Awake()
-    {
-        actions = new PlayerAction();
-    }
     void Start()
     {
-        
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        movement = actions.Player.Move.ReadValue<Vector2>();
+        Vector2 direction = ((Vector2)Camera.main.ScreenToWorldPoint(mouse) - (Vector2)transform.position).normalized;
+        angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Debug.DrawRay(transform.position, direction);
+        Debug.Log(RollD);
+        if(rollCount!=0)
+        {
+            if (TimerRollC <= 0.3f)
+                TimerRollC += Time.deltaTime;
+            else
+            {
+                rollCount = 0;
+                TimerRollC = 0;
+            }
+
+        }
     }
 
     private void FixedUpdate()
     {
-
-        rb.MovePosition(rb.position + movement * Speed * Time.fixedDeltaTime);
+        if(!isRolling)
+            rb.MovePosition(rb.position + movement * Speed * Time.fixedDeltaTime);
+        else if (timerRoll <= 0.1f)
+        {
+            timerRoll += Time.fixedDeltaTime;
+        }
+        else
+        {
+            timerRoll = 0;
+            isRolling = false;
+        }
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    private void OnEnable()
+    void OnMove(InputValue Value)
     {
-        actions.Player.Enable();
+        movement = Value.Get<Vector2>();
+        if (movement != Vector2.zero)
+        {
+            RollD = movement;
+        }
     }
 
-    private void OnDisable()
+
+    void OnLook(InputValue Value)
     {
-        actions.Player.Disable();
+        mouse = Value.Get<Vector2>();
+    }
+
+    void OnRoll()
+    {
+        if (rollCount==0)
+        {   
+            rb.velocity = Vector2.zero;
+            rb.AddForce(RollD * 30, ForceMode2D.Impulse);
+            isRolling = true;
+            rollCount++;
+        }
+        
+
     }
 }
