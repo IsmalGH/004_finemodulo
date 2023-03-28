@@ -25,8 +25,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 direction = ((Vector2)Camera.main.ScreenToWorldPoint(mouse) - (Vector2)transform.position).normalized;
         angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Debug.DrawRay(transform.position, direction);
-        Debug.Log(RollD);
         if(rollCount!=0)
         {
             if (TimerRollC <= 0.3f)
@@ -53,7 +51,7 @@ public class PlayerController : MonoBehaviour
             timerRoll = 0;
             isRolling = false;
         }
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        rb.rotation = angle;
     }
 
     void OnMove(InputValue Value)
