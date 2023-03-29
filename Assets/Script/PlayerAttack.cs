@@ -33,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
     {
         GameObject Bullet = Instantiate(BulletPre, FirePoint.position, FirePoint.rotation);
         Rigidbody2D BulletRB = Bullet.GetComponent<Rigidbody2D>();
-        BulletRB.AddForce(FirePoint.right * 10, ForceMode2D.Impulse);
+        BulletRB.AddForce(FirePoint.right * 20, ForceMode2D.Impulse);
     }
 
 }

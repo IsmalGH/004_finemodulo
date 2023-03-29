@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     {
         if(!isRolling)
             rb.MovePosition(rb.position + movement * Speed * Time.fixedDeltaTime);
-        else if (timerRoll <= 0.1f)
+        else if (timerRoll <= 0.15f)
         {
             timerRoll += Time.fixedDeltaTime;
         }
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         if (rollCount==0)
         {   
             rb.velocity = Vector2.zero;
-            rb.AddForce(RollD * 30, ForceMode2D.Impulse);
+            rb.AddForce(RollD * 20, ForceMode2D.Impulse);
             isRolling = true;
             rollCount++;
         }

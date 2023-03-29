@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4793817721483051457}
   - component: {fileID: 6873831448663748009}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Dynamic Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,9 +94,9 @@ GameObject:
   - component: {fileID: 3204419689243767907}
   - component: {fileID: 2943542312755938217}
   - component: {fileID: 8154188622852032018}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
