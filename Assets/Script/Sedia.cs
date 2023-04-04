@@ -4,11 +4,13 @@ public class Sedia : MonoBehaviour
 {
 
     [SerializeField] Transform Su, Giù, Destra, Sinistra;
+    [SerializeField] LayerMask Mura;
 
     GameObject Player;
     Rigidbody2D rb;
-    bool isMoving,Range;
-    Vector2 direction, Push;
+    bool isMoving,Range,Unmovable;
+    Vector2 direction, Push,thisPush;
+    RigidbodyConstraints2D Blocco;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +18,7 @@ public class Sedia : MonoBehaviour
         isMoving = false;
         Player = GameObject.FindGameObjectWithTag("Player");
         rb = gameObject.GetComponent<Rigidbody2D>();
+        Unmovable = false;
     }
 
     // Update is called once per frame
@@ -38,7 +41,10 @@ public class Sedia : MonoBehaviour
             Push = Vector2.up;
 
 
-        Physics2D.OverlapBox(Su.position, new Vector2(0.5f, 0.1f),0);
+
+        Unmovable = (Physics2D.OverlapBox(Su.position, new Vector2(0.5f, 0.1f), 0, Mura) || Physics2D.OverlapBox(Giù.position, new Vector2(0.5f, 0.1f), 0, Mura)) && (Physics2D.OverlapBox(Destra.position, new Vector2(0.5f, 0.1f), 0, Mura) || Physics2D.OverlapBox(Sinistra.position, new Vector2(0.5f, 0.1f), 0, Mura));
+
+        Debug.Log(Unmovable);
 
         if (!isMoving)
         {
@@ -47,7 +53,18 @@ public class Sedia : MonoBehaviour
         }
         else
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+             if(thisPush == Vector2.down || thisPush == Vector2.up)
+            {
+                rb.constraints = (RigidbodyConstraints2D)5;
+                Debug.Log("Blocco X");
+            }
+                 
+             if (thisPush == Vector2.left || thisPush == Vector2.right)
+            {
+                rb.constraints = (RigidbodyConstraints2D)6;
+                Debug.Log("Blocco Y");
+            }
+                 
             Physics2D.IgnoreLayerCollision(3, 6);
         }
             
@@ -59,8 +76,13 @@ public class Sedia : MonoBehaviour
     {
         if (Range)
         {
+            thisPush = Push;
             isMoving = true;
-            rb.AddForce(Push * 10, ForceMode2D.Impulse);
+            if (Unmovable || (Physics2D.OverlapBox(Su.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.up) || (Physics2D.OverlapBox(Giù.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.down) || (Physics2D.OverlapBox(Destra.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.right) || (Physics2D.OverlapBox(Sinistra.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.left))
+                rb.AddForce(Push * -10, ForceMode2D.Impulse);
+            else
+                rb.AddForce(Push * 10, ForceMode2D.Impulse);
+
         }
     }
 
@@ -76,17 +98,17 @@ public class Sedia : MonoBehaviour
             Range = false;
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-
-        }
+        
+            rb.velocity = Vector2.zero;
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(Su.position, new Vector2(0.5f, 0.1f));
         Gizmos.DrawWireCube(Giù.position, new Vector2(0.5f, 0.1f));
         Gizmos.DrawWireCube(Destra.position, new Vector2(0.1f, 0.5f));
+        Gizmos.DrawWireCube(Sinistra.position, new Vector2(0.1f, 0.5f));
     }
 }

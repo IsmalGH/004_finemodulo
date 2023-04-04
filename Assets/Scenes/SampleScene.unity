@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 39848722}
   - component: {fileID: 39848721}
   - component: {fileID: 39848720}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Static Sprite (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 326035497}
   - component: {fileID: 326035496}
   - component: {fileID: 326035495}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Static Sprite (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 766087669}
   - component: {fileID: 766087668}
   - component: {fileID: 766087667}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Static Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -638,7 +638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 897070882}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Level Blockout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 1247476067}
   - component: {fileID: 1247476066}
   - component: {fileID: 1247476065}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Static Sprite (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,8 +772,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1247476063}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 6.5786, y: 4.312, z: 40}
-  m_LocalScale: {x: 1, y: 17.70303, z: 1}
+  m_LocalPosition: {x: 6.5786, y: 4.3227, z: 40}
+  m_LocalScale: {x: 1.0213, y: 17.70303, z: 1}
   m_Children: []
   m_Father: {fileID: 897070882}
   m_RootOrder: 2
@@ -1227,6 +1227,14 @@ PrefabInstance:
       propertyPath: Sinistra
       value: 
       objectReference: {fileID: 8809154222945447870}
+    - target: {fileID: 8809154222938568977, guid: 3d23681ba9cd80f4588e003618676d00, type: 3}
+      propertyPath: Mura.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809154222938568981, guid: 3d23681ba9cd80f4588e003618676d00, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8809154222938568982, guid: 3d23681ba9cd80f4588e003618676d00, type: 3}
       propertyPath: m_RootOrder
       value: 2

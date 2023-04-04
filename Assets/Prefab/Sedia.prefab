@@ -253,6 +253,9 @@ MonoBehaviour:
   "Gi\xF9": {fileID: 98493866360267730}
   Destra: {fileID: 5576367604329894126}
   Sinistra: {fileID: 5627113267347020435}
+  Mura:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!50 &8809154222938568981
 Rigidbody2D:
   serializedVersion: 4
@@ -272,7 +275,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &8809154222938568976
 MonoBehaviour:
@@ -328,5 +331,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 3.5, y: 3.5}
   m_EdgeRadius: 0
