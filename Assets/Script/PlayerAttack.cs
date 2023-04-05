@@ -8,7 +8,7 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField]GameObject BulletPre;
     [SerializeField]Transform FirePoint;
-
+    [SerializeField] float danno;
 
 
 
@@ -33,6 +33,8 @@ public class PlayerAttack : MonoBehaviour
     {
         GameObject Bullet = Instantiate(BulletPre, FirePoint.position, FirePoint.rotation);
         Rigidbody2D BulletRB = Bullet.GetComponent<Rigidbody2D>();
+        Bullet Damage = Bullet.GetComponent<Bullet>();
+        Damage.Damage = danno;
         BulletRB.AddForce(FirePoint.right * 20, ForceMode2D.Impulse);
     }
 

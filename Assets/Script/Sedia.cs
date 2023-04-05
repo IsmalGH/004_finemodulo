@@ -44,7 +44,6 @@ public class Sedia : MonoBehaviour
 
         Unmovable = (Physics2D.OverlapBox(Su.position, new Vector2(0.5f, 0.1f), 0, Mura) || Physics2D.OverlapBox(Giù.position, new Vector2(0.5f, 0.1f), 0, Mura)) && (Physics2D.OverlapBox(Destra.position, new Vector2(0.5f, 0.1f), 0, Mura) || Physics2D.OverlapBox(Sinistra.position, new Vector2(0.5f, 0.1f), 0, Mura));
 
-        Debug.Log(Unmovable);
 
         if (!isMoving)
         {
@@ -56,13 +55,12 @@ public class Sedia : MonoBehaviour
              if(thisPush == Vector2.down || thisPush == Vector2.up)
             {
                 rb.constraints = (RigidbodyConstraints2D)5;
-                Debug.Log("Blocco X");
+
             }
                  
              if (thisPush == Vector2.left || thisPush == Vector2.right)
             {
                 rb.constraints = (RigidbodyConstraints2D)6;
-                Debug.Log("Blocco Y");
             }
                  
             Physics2D.IgnoreLayerCollision(3, 6);
