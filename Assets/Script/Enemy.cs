@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, Damageable
 {
-    [SerializeField] float Distance, SafeDistance;
+    [SerializeField] [Range(0,10)] float Distance, SafeDistance, AttackSpeed;
     [SerializeField] LayerMask PlayerMask;
     [SerializeField] Transform Forward;
     [SerializeField] SpriteRenderer Sprite;
-    [SerializeField] bool aggro = false, stop;
+    [SerializeField] bool aggro = false;
     [SerializeField] GameObject BulletPre;
 
     Vector2 Direction, oldPosition;
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour, Damageable
             }
         }
 
-        if (aggro && !Hit.transform.CompareTag("Player"))
+      /*  if (aggro && !Hit.transform.CompareTag("Player"))
         {
             if (timerAggro < 2f)
             {
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour, Damageable
                 timerAggro = 0;
                 aggro = false;
             }
-        }
+        } */
 
         if (Health <= 0)
             Destroy(gameObject);
@@ -71,8 +71,6 @@ public class Enemy : MonoBehaviour, Damageable
     private void FixedUpdate()
     {
 
-        if (!stop)
-        {
             if (aggro)
             {
                 rb.rotation = angle;
@@ -82,20 +80,16 @@ public class Enemy : MonoBehaviour, Damageable
                 }
 
             }
-            else if ((Vector2)transform.position != oldPosition)
+           /* else if ((Vector2)transform.position != oldPosition)
             {
                 rb.position = Vector2.MoveTowards(transform.position, oldPosition, 0.05f);
-            }
-
-        }
-
-
+            } */
     }
 
 
     void Attack()
     {
-        if (timerAttack < 0.3f)
+        if (timerAttack < AttackSpeed)
         {
             timerAttack += Time.deltaTime;
         }
@@ -110,30 +104,9 @@ public class Enemy : MonoBehaviour, Damageable
     }
     public void Hurt(float Damage)
     {
-        float timer = 0;
+
         Health -= Damage;
-        InvokeRepeating("Lampeggiare", 0.01f, 0.1f);
-        if (timer < 0.05f)
-        {
-            stop = true;
-            timer += Time.deltaTime;
-        }
-        else
-        {
-            stop = false;
-            timer = 0;
-        }
-        CancelInvoke();
-
+        aggro = true;
     }
-
-    void Lampeggiare()
-    {
-        if (Sprite.color == Color.red)
-            Sprite.color = Color.white;
-        else
-            Sprite.color = Color.red;
-    }
-
 
 }

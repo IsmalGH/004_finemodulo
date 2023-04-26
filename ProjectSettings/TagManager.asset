@@ -7,6 +7,9 @@ TagManager:
   - Bullet
   - Wall
   - Enemy
+  - CameraBound
+  - Sedia
+  - Buco
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - Physics
   - Wall
   - Player
-  - 
+  - Buco
   - 
   - 
   - 

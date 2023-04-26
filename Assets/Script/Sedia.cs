@@ -4,13 +4,15 @@ public class Sedia : MonoBehaviour
 {
 
     [SerializeField] Transform Su, Giù, Destra, Sinistra;
+    [SerializeField] GameObject ActSu, ActGiù, ActDestra, ActSinistra;
     [SerializeField] LayerMask Mura;
+    [SerializeField] int Damage;
 
     GameObject Player;
-    Rigidbody2D rb;
+    Rigidbody2D rb,enemy;
     bool isMoving,Range,Unmovable;
     Vector2 direction, Push,thisPush;
-    RigidbodyConstraints2D Blocco;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +46,33 @@ public class Sedia : MonoBehaviour
 
         Unmovable = (Physics2D.OverlapBox(Su.position, new Vector2(0.5f, 0.1f), 0, Mura) || Physics2D.OverlapBox(Giù.position, new Vector2(0.5f, 0.1f), 0, Mura)) && (Physics2D.OverlapBox(Destra.position, new Vector2(0.5f, 0.1f), 0, Mura) || Physics2D.OverlapBox(Sinistra.position, new Vector2(0.5f, 0.1f), 0, Mura));
 
+
+        if (Range)
+        {
+            if (Push == Vector2.left)
+                ActDestra.SetActive(true);
+            else
+                ActDestra.SetActive(false);
+            if (Push == Vector2.up)
+                ActGiù.SetActive(true);
+            else
+                ActGiù.SetActive(false);
+            if (Push == Vector2.right)
+                ActSinistra.SetActive(true);
+            else
+                ActSinistra.SetActive(false);
+            if (Push == Vector2.down)
+                ActSu.SetActive(true);
+            else
+                ActSu.SetActive(false);
+        }
+        else
+        {
+            ActDestra.SetActive(false);
+            ActGiù.SetActive(false);
+            ActSu.SetActive(false);
+            ActSinistra.SetActive(false);
+        }
 
         if (!isMoving)
         {
@@ -99,7 +128,42 @@ public class Sedia : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if(rb.velocity!= Vector2.zero)
+            {
+                Damageable Hit = collision.gameObject.GetComponent<Damageable>();
+                if (Hit != null)
+                    Hit.Hurt(Damage);
+            }
+
+
+            enemy = collision.collider.GetComponent<Rigidbody2D>();
+            if (!(enemy.bodyType == RigidbodyType2D.Static))
+            {
+                Vector2 direction = enemy.position - (Vector2)transform.position;
+                enemy.AddForce(direction * 10);
+            }
+               
+
+        }
+        rb.velocity = Vector2.zero;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if(rb.velocity != Vector2.zero)
+            {
+                Damageable Hit = collision.gameObject.GetComponent<Damageable>();
+                if (Hit != null)
+                    Hit.Hurt(Damage);
+            }
             rb.velocity = Vector2.zero;
+        }
+            
     }
 
     private void OnDrawGizmos()
