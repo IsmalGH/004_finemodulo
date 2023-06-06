@@ -6,10 +6,9 @@ public class Sedia : MonoBehaviour
     [SerializeField] Transform Su, Giù, Destra, Sinistra;
     [SerializeField] GameObject ActSu, ActGiù, ActDestra, ActSinistra;
     [SerializeField] LayerMask Mura;
-    [SerializeField] int Damage;
 
     GameObject Player;
-    Rigidbody2D rb,enemy;
+    Rigidbody2D rb;
     bool isMoving,Range,Unmovable;
     Vector2 direction, Push,thisPush;
 
@@ -105,10 +104,7 @@ public class Sedia : MonoBehaviour
         {
             thisPush = Push;
             isMoving = true;
-            if (Unmovable || (Physics2D.OverlapBox(Su.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.up) || (Physics2D.OverlapBox(Giù.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.down) || (Physics2D.OverlapBox(Destra.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.right) || (Physics2D.OverlapBox(Sinistra.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.left))
-                rb.AddForce(Push * -10, ForceMode2D.Impulse);
-            else
-                rb.AddForce(Push * 10, ForceMode2D.Impulse);
+            Move(Push);
 
         }
     }
@@ -127,43 +123,7 @@ public class Sedia : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            if(rb.velocity!= Vector2.zero)
-            {
-                Damageable Hit = collision.gameObject.GetComponent<Damageable>();
-                if (Hit != null)
-                    Hit.Hurt(Damage);
-            }
-
-
-            enemy = collision.collider.GetComponent<Rigidbody2D>();
-            if (!(enemy.bodyType == RigidbodyType2D.Static))
-            {
-                Vector2 direction = enemy.position - (Vector2)transform.position;
-                enemy.AddForce(direction * 10);
-            }
-               
-
-        }
         rb.velocity = Vector2.zero;
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            if(rb.velocity != Vector2.zero)
-            {
-                Damageable Hit = collision.gameObject.GetComponent<Damageable>();
-                if (Hit != null)
-                    Hit.Hurt(Damage);
-            }
-            rb.velocity = Vector2.zero;
-        }
-            
     }
 
     private void OnDrawGizmos()
@@ -173,4 +133,14 @@ public class Sedia : MonoBehaviour
         Gizmos.DrawWireCube(Destra.position, new Vector2(0.1f, 0.5f));
         Gizmos.DrawWireCube(Sinistra.position, new Vector2(0.1f, 0.5f));
     }
+
+    public void Move(Vector2 A)
+    {
+        Debug.Log("MUOVI");
+        if (Unmovable || (Physics2D.OverlapBox(Su.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.up) || (Physics2D.OverlapBox(Giù.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.down) || (Physics2D.OverlapBox(Destra.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.right) || (Physics2D.OverlapBox(Sinistra.position, new Vector2(0.5f, 0.1f), 0, Mura) && thisPush == Vector2.left))
+            rb.AddForce(A * -10, ForceMode2D.Impulse);
+        else
+            rb.AddForce(A * 10, ForceMode2D.Impulse);
+    }
+
 }

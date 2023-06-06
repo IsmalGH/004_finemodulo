@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour,Damageable
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] [Range(0, 10)] float Speed;
     [SerializeField] float PlayerHealth = 100;
-    [SerializeField] HealtBar Bar;
 
 
     Rigidbody2D rb;
@@ -87,10 +86,4 @@ public class PlayerController : MonoBehaviour,Damageable
 
     }
 
-    public void Hurt(float Damage)
-    {
-
-        PlayerHealth -= Damage;
-        Bar.TakeDamage(Damage);
-    }
 }
